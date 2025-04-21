@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic Light System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+<body>
+
+<h2>Traffic Light</h2>
+
+<label> <input type="checkbox" onchange="trafficLight(this, 'red')"> Red Light </label>
+<label> <input type="checkbox" onchange="trafficLight(this, 'yellow')"> Yellow Light </label>
+<label> <input type="checkbox" onchange="trafficLight(this, 'green')"> Green Light </label>
+
+<script>
+    function trafficLight(checkbox, color)
+    {
+        console.log("traffic light checkbox:", checkbox.checked);
+        const baseUrl = "http://192.168.68.72:80";
+        const state = checkbox.checked ? "on" : "off";
+        const url = `${baseUrl}/${color}/${state}`;
+
+        const headers = {"Accept": "*/*"};
+        console.log(`${url}`);
+        window.fetch(url, {headers})
+            .then(response => response.text())
+            .then(text => console.log(`${color} LED ${state}:`, text))
+            .catch(error => console.error('Error:', error.message));
+    }
+</script>
+
+</body>
+</html>
